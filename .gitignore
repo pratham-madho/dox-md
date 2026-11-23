@@ -17,3 +17,6 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# MDAnalysis trajectory offset caches
+.*.xtc_offsets.*

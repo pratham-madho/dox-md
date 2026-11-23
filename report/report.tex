@@ -35,6 +35,18 @@
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage{float}
+\usepackage{placeins}
+% let floats fill pages instead of leaving gaps
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.85}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\setlength{\textfloatsep}{12pt plus 4pt minus 2pt}
+\setlength{\floatsep}{10pt plus 3pt minus 2pt}
+\setlength{\intextsep}{10pt plus 3pt minus 2pt}
 \usepackage[font=small,labelfont={bf,sf},format=hang,skip=6pt]{caption}
 \usepackage{subcaption}
 \usepackage{enumitem}\setlist{itemsep=2pt,topsep=4pt}
@@ -60,10 +72,8 @@
 \titlespacing*{\subsection}{0pt}{1.2em}{0.5em}
 
 \pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\sffamily\color{gray}DOX\textsuperscript{+}--membrane molecular dynamics}
-\fancyhead[R]{\small\sffamily\color{gray}\nouppercase{\leftmark}}
 \fancyfoot[C]{\small\sffamily\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0pt}
 
 \lstset{basicstyle=\ttfamily\footnotesize,columns=fullflexible,frame=single,
         rulecolor=\color{gray!40},backgroundcolor=\color{boxbg},breaklines=true,
@@ -163,29 +173,26 @@ key design variable.
 liquid-ordered phase; liposomal drug delivery; GROMACS; CHARMM36.
 
 \clearpage
+\begingroup\setstretch{1.0}\setlength{\parskip}{0pt}
 \tableofcontents
+\clearpage
 \listoffigures
 \listoftables
+\endgroup
 
 \section*{List of Abbreviations}
 \addcontentsline{toc}{section}{List of Abbreviations}
-\begin{tabular}{@{}p{3.2cm}p{11cm}@{}}
-\dox & protonated doxorubicin (charged ammonium form) \\
-DPPC & 1,2-dipalmitoyl-\emph{sn}-glycero-3-phosphocholine \\
-CHL1 & cholesterol (CHARMM residue name) \\
-\Ld{} / \Lo{} & liquid-disordered / liquid-ordered lipid phase \\
-MD & molecular dynamics \\
-CGenFF & CHARMM General Force Field \\
-PME & particle-mesh Ewald summation \\
-NPT & isothermal--isobaric ensemble \\
-APL & area per lipid \\
-$D_{\mathrm{PP}}$ & phosphate-to-phosphate bilayer thickness \\
-RDF, $g(r)$ & radial distribution function \\
-MSD & mean-squared displacement \\
-$\scd$ & carbon--deuterium order parameter \\
-COM & centre of mass \\
-LJ & Lennard-Jones (van der Waals) \\
-\end{tabular}
+{\small
+\begin{tabular}{@{}p{1.9cm}p{5.6cm}@{\hspace{0.6cm}}p{1.9cm}p{5.6cm}@{}}
+\dox & protonated doxorubicin & NPT & isothermal--isobaric ensemble \\
+DPPC & 1,2-dipalmitoyl-\emph{sn}-glycero-3-phosphocholine & APL & area per lipid \\
+CHL1 & cholesterol (CHARMM residue name) & $D_{\mathrm{PP}}$ & phosphate-to-phosphate thickness \\
+\Ld{} / \Lo{} & liquid-disordered / liquid-ordered phase & RDF, $g(r)$ & radial distribution function \\
+MD & molecular dynamics & MSD & mean-squared displacement \\
+CGenFF & CHARMM General Force Field & $\scd$ & carbon--deuterium order parameter \\
+PME & particle-mesh Ewald summation & COM & centre of mass \\
+ & & LJ & Lennard-Jones (van der Waals) \\
+\end{tabular}}
 
 \clearpage
 \pagenumbering{arabic}
@@ -246,7 +253,9 @@ The aims of this project were:
         characterise its final location, orientation, interaction energetics, hydrogen bonding and
         mobility;
   \item to compare the outcome quantitatively with the reference study and to interpret the role of
-        cholesterol for liposomal drug formulation.
+        cholesterol for liposomal drug formulation;
+  \item to go beyond the reference study with analyses it does not report, namely acyl-chain order
+        parameters, binding kinetics, drug orientation and lateral diffusion (\cref{sec:beyond}).
 \end{enumerate}
 
 % =====================================================================
@@ -338,29 +347,13 @@ by recomputing energies over the stored trajectory with energy groups (\texttt{g
 \section{Methodology}
 \label{sec:methods}
 
-\Cref{fig:workflow} summarises the complete workflow, from ligand preparation to analysis.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-  node distance=5mm and 6mm,
-  box/.style={draw=accent, rounded corners=3pt, fill=boxbg, align=center,
-              font=\sffamily\footnotesize, minimum height=12mm, text width=26mm},
-  arr/.style={-{Stealth[length=2.2mm]}, thick, accent}]
-\node[box] (lig) {PubChem CID 31703\\3D conformer};
-\node[box, right=of lig] (prot) {RDKit\\protonate NH\textsubscript{2}\,$\to$\,\nhthree};
-\node[box, right=of prot] (cgenff) {CHARMM-GUI\\Ligand Reader\\(CGenFF)};
-\node[box, right=of cgenff] (mem) {CHARMM-GUI\\Membrane Builder\\(CHARMM36)};
-\node[box, below=9mm of mem] (ins) {insert \dox{} + Cl\textsuperscript{$-$}\\in water,\\remove overlaps};
-\node[box, left=of ins] (eq) {minimisation +\\6-step restrained\\equilibration};
-\node[box, left=of eq] (prod) {\SI{150}{ns} NPT\\production\\(GROMACS 2026)};
-\node[box, left=of prod] (ana) {analysis\\(MDAnalysis,\\\texttt{gmx}, Python)};
-\draw[arr] (lig) -- (prot); \draw[arr] (prot) -- (cgenff); \draw[arr] (cgenff) -- (mem);
-\draw[arr] (mem) -- (ins); \draw[arr] (ins) -- (eq); \draw[arr] (eq) -- (prod); \draw[arr] (prod) -- (ana);
-\end{tikzpicture}
-\caption[Simulation workflow]{Workflow followed for both systems.}
-\label{fig:workflow}
-\end{figure}
+In outline, the study had four stages. First, the drug was converted to its protonated form and given
+CGenFF parameters. Second, two bilayers, pure DPPC (\sysA) and DPPC/cholesterol 1:1 (\sysB), were built
+with CHARMM-GUI, and one \dox{} molecule was placed in the water above each. Third, both systems were
+minimised, equilibrated with restraints that were released step by step, and then simulated without any
+bias for \SI{150}{ns}. Finally, the trajectories were analysed for drug position, energetics, contacts and
+mobility, and for membrane structure. \Cref{fig:workflow} summarises this workflow, and the following
+subsections describe each stage.
 
 \subsection{Preparation of protonated doxorubicin}
 The three-dimensional conformer of doxorubicin was obtained from PubChem (CID~31703) \cite{pubchem2023}.
@@ -371,13 +364,36 @@ identifies the single primary aliphatic amine with the SMARTS pattern
 three-dimensional coordinates. This gives C\textsubscript{27}H\textsubscript{30}NO\textsubscript{11}\textsuperscript{+}
 (69 atoms, net charge $+1$; \cref{fig:dox}).
 
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=4mm and 6mm,
+  box/.style={draw=accent, rounded corners=3pt, fill=boxbg, align=center,
+              font=\sffamily\footnotesize, minimum height=10mm, text width=26mm, inner sep=2pt},
+  arr/.style={-{Stealth[length=2.2mm]}, thick, accent}]
+\node[box] (lig) {PubChem CID 31703\\3D conformer};
+\node[box, right=of lig] (prot) {RDKit\\protonate NH\textsubscript{2}\,$\to$\,\nhthree};
+\node[box, right=of prot] (cgenff) {CHARMM-GUI\\Ligand Reader\\(CGenFF)};
+\node[box, right=of cgenff] (mem) {CHARMM-GUI\\Membrane Builder\\(CHARMM36)};
+\node[box, below=6mm of mem] (ins) {insert \dox{} + Cl\textsuperscript{$-$}\\in water,\\remove overlaps};
+\node[box, left=of ins] (eq) {minimisation +\\6-step restrained\\equilibration};
+\node[box, left=of eq] (prod) {\SI{150}{ns} NPT\\production\\(GROMACS 2026)};
+\node[box, left=of prod] (ana) {analysis\\(MDAnalysis,\\\texttt{gmx}, Python)};
+\draw[arr] (lig) -- (prot); \draw[arr] (prot) -- (cgenff); \draw[arr] (cgenff) -- (mem);
+\draw[arr] (mem) -- (ins); \draw[arr] (ins) -- (eq); \draw[arr] (eq) -- (prod); \draw[arr] (prod) -- (ana);
+\end{tikzpicture}
+\caption[Simulation workflow]{Workflow followed for both systems.}
+\label{fig:workflow}
+\end{figure}
+
+
 Force-field parameters were generated with the CHARMM-GUI Ligand Reader \& Modeler \cite{kim2017},
 which assigns CGenFF atom types, charges and parameters by analogy. The reported penalties were
 28.5 (parameters) and 8.7 (charges). Penalties below 50 are conventionally considered acceptable for
 use with only basic validation, and the highest-penalty term was a dihedral of the conjugated quinone
 ring.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.66\linewidth]{fig_dox_structure.png}
 \caption[Chemical structure of protonated doxorubicin]{Protonated doxorubicin (\dox) as simulated. The
@@ -399,7 +415,7 @@ For system \sysB{}, the cholesterol-containing bilayer was first equilibrated on
 full six-step protocol followed by an additional \SI{10}{ns} of unrestrained NPT, before the drug
 was inserted. This ensured that cholesterol had relaxed within the leaflets.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Composition of the simulated systems]{Composition and dimensions of the two simulated systems.
 Box dimensions are averages over the production run.}
@@ -432,7 +448,7 @@ dihedral restraints on the lipid glycerol/double-bond geometry are released grad
 (\cref{tab:equil}). The first two steps are run at constant volume, and the remaining steps at constant
 pressure.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Equilibration protocol]{Minimisation and equilibration protocol. Force constants are in
 \si{kJ\,mol^{-1}\,nm^{-2}} (positional) and \si{kJ\,mol^{-1}\,rad^{-2}} (dihedral).}
@@ -460,7 +476,7 @@ Production runs were carried out with GROMACS~2026.4 \cite{abraham2015} using th
 \SI{10}{ps}, giving \num{15001} frames per system. The runs were performed in several restart segments
 from checkpoint files, and the segments were concatenated for analysis.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Production MD parameters]{Production MD parameters (identical for both systems except $T$).}
 \label{tab:mdp}
@@ -533,7 +549,7 @@ Before interpreting drug behaviour, the two membranes were checked against known
 (\cref{tab:membrane}). Temperature control was tight in both runs, at \SI{323.2 \pm 2.0}{K} and
 \SI{303.2 \pm 2.1}{K}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Structural properties of the bilayers]{Structural properties of the two membranes over the
 production runs (mean $\pm$ standard deviation). Experimental values for fluid DPPC at
@@ -566,7 +582,7 @@ the rigid cholesterol ring system lies alongside the DPPC chains, and it falls o
 ends. This is the signature of the liquid-ordered phase. The two membranes therefore provide the intended
 contrast: a loosely packed fluid bilayer and a tightly packed, ordered one.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.66\linewidth]{fig5_order_parameter.png}
 \caption[Acyl-chain order parameters]{Deuterium order parameter $-\scd$ along the \emph{sn}-1 and
@@ -581,7 +597,7 @@ adjacent to its rigid ring system (C4--C11), which is characteristic of the liqu
 membrane. Representative snapshots appear in \cref{fig:snapA,fig:snapB}, and the binding statistics are
 collected in \cref{tab:kinetics}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{fig1_depth_vs_time.png}
 \caption[\dox{} height above the bilayer centre versus time]{Distance of the \dox{} centre from the bilayer
@@ -592,7 +608,7 @@ but never passes the phosphates.}
 \label{fig:depth}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\linewidth]{fig2_binding_timeline.png}
 \caption[Membrane-binding timeline]{Periods during which \dox{} is in contact with the membrane (any atom
@@ -629,7 +645,7 @@ plane (\SI{23.7}{\angstrom}) in only 1.1\,\% of frames, and its deepest point wa
 (\SIrange{118}{136}{ns}) its centre stayed \emph{outside} the phosphate plane, at
 \SI{27.7 \pm 2.7}{\angstrom}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Binding and penetration statistics]{Binding and penetration statistics over \SI{150}{ns}.
 ``Bound'': any \dox{} atom within \SI{5}{\angstrom} of a lipid phosphorus (events $<\SI{1}{ns}$ merged).
@@ -654,7 +670,7 @@ Apparent $\Delta G_\mathrm{bind}$ & \SI{-0.8}{\kcal\per\mol} & \SI{+0.1}{\kcal\p
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.86\linewidth]{fig_snap_A.png}
 \caption[Snapshots of system A]{Snapshots of system \sysA{} (fluid DPPC). DPPC is shown as grey sticks,
@@ -664,7 +680,7 @@ it resides below the phosphate plane, partly hidden among the acyl chains.}
 \label{fig:snapA}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{fig_snap_B.png}
 \caption[Snapshots of system B]{Snapshots of system \sysB{} (DPPC/cholesterol 1:1). DPPC is shown as
@@ -685,7 +701,7 @@ there is already low. In DPPC/cholesterol, the \dox{} peak is at \SI{29.5}{\angs
 entirely with the water profile and has no overlap with the tails. The cholesterol hydroxyls form a
 dense layer at \SI{18.5}{\angstrom}, just beneath the phosphates, which adds to the barrier.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.98\linewidth]{fig3_density_profiles.png}
 \caption[Density profiles]{Symmetrised number-density profiles along the bilayer normal, each normalised to
@@ -708,7 +724,7 @@ proposed experimentally \cite{siani2021}. In DPPC/cholesterol, the whole molecul
 phosphates: the ring end sits at \SI{24.6}{\angstrom}, right at the phosphate plane, and lies at
 \SI{68}{\degree} to the normal, i.e.\ nearly flat on the surface.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Orientation of \dox]{Heights above the bilayer midplane of the \nhthree{} nitrogen, the \dox{}
 centre and the ring end (heavy atom farthest from N), and the angle of the N$\to$ring vector to the inward
@@ -747,7 +763,7 @@ total is only about \SI{-38}{\kcal\per\mol}, against $\approx\SI{-91}{\kcal\per\
 Almost all of it comes from DPPC; cholesterol contributes only \SI{-4}{\kcal\per\mol}, because its
 hydroxyl groups lie beneath the phosphates, out of the drug's reach.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{fig6_interaction_energy.png}
 \caption[\dox--membrane interaction energies]{Short-range electrostatic (top) and van der Waals (bottom)
@@ -757,7 +773,7 @@ Waals energy drops abruptly at insertion ($\approx\SI{56}{ns}$) to a level close
 \label{fig:energy}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Interaction energies]{Average short-range \dox{}--membrane interaction energies
 (\si{\kcal\per\mol}, mean $\pm$ s.d.). The PME reciprocal-space part cannot be decomposed by group and is
@@ -804,7 +820,7 @@ bonds to water. In the cholesterol-rich membrane, ester hydrogen bonds are essen
 and water dominates (2.5--3.1 per frame). In the late bound period, even the phosphate contacts weaken to
 0.3 per frame, because the drug lies flat on the surface.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{fig4_rdf.png}
 \caption[Radial distribution functions]{RDFs between the \dox{} \nhthree{} nitrogen and phosphate
@@ -814,7 +830,7 @@ inserted drug in fluid DPPC.}
 \label{fig:rdf}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.82\linewidth]{fig7_hbonds.png}
 \caption[Hydrogen bonds donated by \dox]{Mean number of hydrogen bonds donated by \dox{} (ammonium and
@@ -834,7 +850,7 @@ to the lateral diffusion of the lipids themselves, so the inserted drug effectiv
 membrane. These values derive from single trajectory segments and carry uncertainties of roughly
 $\pm40\,\%$, but the differences between states span two orders of magnitude.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{fig8_diffusion.png}
 \caption[Lateral diffusion of \dox]{Lateral diffusion coefficient of \dox{} in different states (log
@@ -852,7 +868,7 @@ insertion into fluid DPPC slows it about fiftyfold, to lipid-like mobility.}
 who used the same force fields and membrane compositions but a different engine (NAMD),
 thermostat/barostat (Langevin), and longer (\SI{500}{ns}) trajectories.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption[Comparison with the reference study]{Key observables compared with Siani \emph{et~al.}
 \cite{siani2021}.}
@@ -872,14 +888,12 @@ DPPC/chol \Lo: final location & $\approx$\,\SI{28}{\angstrom} (above phosphates)
 \end{tabularx}
 \end{table}
 
-The agreement is good for everything that our \SI{150}{ns} runs can sample:
-\begin{itemize}
-  \item the phosphate anchoring distance;
-  \item the penetration of fluid DPPC;
-  \item the final depth and tilted orientation;
-  \item the magnitude of the van der Waals stabilisation;
-  \item the appearance of ester contacts upon insertion.
-\end{itemize}
+For fluid DPPC, our results agree with the reference on every point in \cref{tab:compare}. The ammonium
+group anchors to the phosphate oxygens at the same \SI{2.65}{\angstrom} distance, the drug penetrates the
+bilayer, and it ends up at a similar depth with its ring tilted into the upper chains. Once inserted,
+it gains a van der Waals stabilisation of similar size ($-44$ versus $\approx\SI{-39}{\kcal\per\mol}$)
+and forms the same contacts with the ester oxygens. The two differences, the insertion time and the final
+location in DPPC/cholesterol, are explained below.
 
 Insertion occurred about three times earlier in our run (\SI{56}{ns} versus $\approx$\,\SI{150}{ns}). With a
 single trajectory per system this is well within the stochastic spread of a rare-event waiting time.
@@ -892,6 +906,32 @@ bulk-water phase and the headgroups in the first \SI{350}{ns}'' before settling 
 repeated binding and unbinding we observe (\cref{fig:timeline}) is exactly that behaviour. The
 discrepancy in the final location is therefore one of sampling time rather than of physics, and it
 indicates that settling at the interface in the \Lo{} phase is slower than in the \Ld{} phase.
+
+\subsection{Analyses beyond the reference study}
+\label{sec:beyond}
+Siani \emph{et~al.} characterised the drug through density profiles, RDFs, hydrogen bonds and interaction
+energies. This work adds several analyses that the reference study does not report:
+\begin{itemize}
+  \item \textbf{Acyl-chain order parameters ($\scd$; \cref{fig:scd}).} The order-parameter profiles show
+        directly \emph{why} the two membranes behave so differently. Cholesterol roughly doubles the chain
+        order ($-\scd$ plateau 0.43 versus 0.22), and the effect is largest at carbons 4--11, the segment
+        that lies alongside the rigid cholesterol rings and just below the glycerol region. This is
+        exactly the depth at which the drug's ring sits once it has inserted into fluid DPPC
+        (\SIrange{9}{12.5}{\angstrom} from the midplane, \cref{tab:orient}). In the cholesterol-rich
+        membrane, the chains in this region are tightly packed and leave no room for the planar ring
+        to slip in. The $\scd$ profile thus links the membrane's structure to the drug's failure to
+        penetrate, and the same profile, together with the area per lipid and thickness
+        (\cref{tab:membrane}), validates both membrane models against NMR and scattering experiments.
+  \item \textbf{Binding kinetics (\cref{fig:timeline,tab:kinetics}).} Counting individual binding events,
+        residence times and rebinding times turns the qualitative picture of ``alternating between water
+        and headgroups'' into numbers: 12 events with a mean residence of \SI{5.1}{ns} in DPPC/cholesterol.
+  \item \textbf{Orientation angle (\cref{tab:orient}).} The tilt of the drug relative to the membrane
+        normal quantifies the anchor-and-dip geometry in fluid DPPC and the flat, surface-adsorbed
+        geometry in DPPC/cholesterol.
+  \item \textbf{Lateral diffusion (\cref{fig:diffusion}).} The diffusion coefficient falls about tenfold
+        when the drug adsorbs on the surface and about fiftyfold when it inserts, which gives an
+        independent dynamical signature of each binding state.
+\end{itemize}
 
 \subsection{Mechanism and the role of cholesterol}
 The results suggest a consistent mechanism for \dox{} uptake by a phosphatidylcholine membrane:
@@ -982,20 +1022,14 @@ DPPC/cholesterol bilayer were set up, validated and analysed. The main conclusio
         that limits doxorubicin partitioning into phosphatidylcholine membranes.
 \end{enumerate}
 
-\subsection*{Future work}
-\begin{itemize}
-  \item Extend both systems to $\geq\SI{500}{ns}$ and run 3--5 independent replicas per system to obtain
-        statistically robust insertion times and final locations.
-  \item Compute potential-of-mean-force profiles for \dox{} along the membrane normal (umbrella
-        sampling / metadynamics) to quantify the partitioning free energy and translocation barrier.
-  \item Add a DPPC/cholesterol system at \SI{323}{K} and a pure DPPC gel system at \SI{303}{K} to separate
-        the effects of cholesterol and temperature.
-  \item Extend to sphingomyelin and sphingomyelin/cholesterol bilayers, the basis of sphingosomal
-        formulations, and to the neutral DOX form or constant-pH MD to model pH-triggered release.
-\end{itemize}
+\section*{Declaration on the use of AI}
+\addcontentsline{toc}{section}{Declaration on the use of AI}
+AI language models (e.g.\ Claude Code) were used to improve the clarity and layout of this report and to
+assist with writing the analysis and plotting scripts. All simulations were set up and run by the author,
+and the author reviewed and takes full responsibility for the methods, results and conclusions presented.
 
 % =====================================================================
-\clearpage
+\FloatBarrier
 \phantomsection
 \addcontentsline{toc}{section}{References}
 \begin{thebibliography}{99}
@@ -1207,7 +1241,7 @@ Chem.MolToMolFile(mol, outfile)
 
 \section{Data and script inventory}
 \label{app:files}
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \small
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\ttfamily}p{5.4cm}X@{}}
