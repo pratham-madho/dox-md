@@ -1,5 +1,7 @@
 # DOX⁺–membrane molecular dynamics
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24459737.svg)](https://doi.org/10.5281/zenodo.24459737)
+
 GROMACS molecular dynamics simulations of protonated doxorubicin (DOX⁺) interacting with lipid bilayers:
 
 - **System A**: fluid DPPC bilayer (`system_A/`)
@@ -20,7 +22,7 @@ The write-up is in [`report/report.pdf`](report/report.pdf) (source: `report/rep
 
 Production trajectories (`*.xtc`, ~7 GB) and rendered videos (`*.mp4`) are too large for GitHub and are archived separately:
 
-> **Data:** _link to be added (Zenodo)_
+> **Data:** [doi:10.5281/zenodo.24459737](https://doi.org/10.5281/zenodo.24459737) (Zenodo)
 
 ## Environment
 
