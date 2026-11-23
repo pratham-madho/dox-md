@@ -1,0 +1,53 @@
+                 :-) GROMACS - gmx grompp, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_A
+Command line:
+  gmx grompp -f step6.2_equilibration.mdp -o eq2_A.tpr -c eq1_A.gro -r min_A.gro -p topol.top -n index_A.ndx
+
+Generating 1-4 interactions: fudge = 1
+Number of degrees of freedom in T-Coupling group MEMB is 39677.00
+Number of degrees of freedom in T-Coupling group SOLV is 32301.00
+
+GROMACS reminds you: "In mathematics you don't understand things, you just get used to them" (John von Neumann)
+
+Setting the LD random seed to 1033584379
+
+Generated 666 of the 666 non-bonded parameter combinations
+
+Generated 498 of the 666 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'DPPC'
+
+turning H bonds into constraints...
+
+Excluding 2 bonded neighbours molecule type 'TIP3'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'LIG'
+
+turning H bonds into constraints...
+
+Excluding 1 bonded neighbours molecule type 'CLA'
+
+turning H bonds into constraints...
+
+Taking velocities from 'eq1_A.gro'
+
+The largest distance between excluded atoms is 0.416 nm between atom 13421 and 13438
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 323.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.228 nm, buffer size 0.028 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 56x56x72, spacing 0.113 0.113 0.110
+
+Estimate for the relative computational load of the PME mesh part: 0.13
+
+This run will generate roughly 7 Mb of data

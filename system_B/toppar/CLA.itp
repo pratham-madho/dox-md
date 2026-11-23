@@ -1,0 +1,7 @@
+[ moleculetype ]
+; name  nrexcl
+CLA     1
+
+[ atoms ]
+; nr  type  resnr  residue  atom  cgnr  charge   mass
+  1   CLA   1      CLA      CLA   1     -1.000   35.4500

@@ -1,0 +1,3 @@
+[ atomtypes ]
+; name  at.num  mass     charge  ptype  sigma         epsilon
+CLA     17      35.4500  -1.000  A      4.04468e-01   6.27600e-01

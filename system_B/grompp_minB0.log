@@ -1,0 +1,39 @@
+                 :-) GROMACS - gmx grompp, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_B
+Command line:
+  gmx grompp -f step6.0_minimization.mdp -o min_B0.tpr -c step5_input.gro -r step5_input.gro -p topol_bilayer.top -n index.ndx
+
+Generating 1-4 interactions: fudge = 1
+Number of degrees of freedom in T-Coupling group rest is 57981.00
+The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+
+GROMACS reminds you: "My greatest contribution to the field of science is that I never entered it." (Colin Powell)
+
+Setting the LD random seed to -776343555
+
+Generated 313 of the 325 non-bonded parameter combinations
+
+Generated 179 of the 325 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'CHL1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'DPPC'
+
+turning H bonds into constraints...
+
+Excluding 2 bonded neighbours molecule type 'TIP3'
+
+turning H bonds into constraints...
+
+The largest distance between excluded atoms is 0.550 nm between atom 12218 and 12227
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 48x48x80, spacing 0.120 0.120 0.108
+
+Estimate for the relative computational load of the PME mesh part: 0.13
+
+This run will generate roughly 2 Mb of data

@@ -1,0 +1,66 @@
+                 :-) GROMACS - gmx grompp, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_B
+Command line:
+  gmx grompp -f prod_B.mdp -o prod_B.tpr -c eqB_6.gro -t eqB_6.cpt -p topol.top -n index_B.ndx
+
+Generating 1-4 interactions: fudge = 1
+Number of degrees of freedom in T-Coupling group MEMB is 31101.00
+Number of degrees of freedom in T-Coupling group SOLV is 26901.00
+Last frame         -1 time  500.000   
+
+GROMACS reminds you: "Creativity in science, as in art, cannot be organized. It arises spontaneously from individual talent. Well-run laboratories can foster it, but hierarchical organizations, inflexible bureaucratic rules, and mountains of futile paperwork can kill it." (Max Perutz)
+
+Setting the LD random seed to 2139044721
+
+Generated 891 of the 903 non-bonded parameter combinations
+
+Generated 664 of the 903 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'CHL1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'DPPC'
+
+turning H bonds into constraints...
+
+Excluding 2 bonded neighbours molecule type 'TIP3'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'LIG'
+
+turning H bonds into constraints...
+
+Excluding 1 bonded neighbours molecule type 'CLA'
+
+turning H bonds into constraints...
+
+Taking velocities from 'eqB_6.gro'
+
+The largest distance between excluded atoms is 0.418 nm between atom 2468 and 2498
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 303.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.276 nm, buffer size 0.076 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+
+Reading Coordinates, Velocities and Box size from old trajectory
+
+Will read whole trajectory
+
+Using frame at t = 500 ps
+
+Starting time for run is 0 ps
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 44x44x84, spacing 0.115 0.115 0.115
+
+Estimate for the relative computational load of the PME mesh part: 0.12
+
+This run will generate roughly 1465 Mb of data

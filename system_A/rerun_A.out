@@ -1,0 +1,31 @@
+                  :-) GROMACS - gmx mdrun, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_A
+Command line:
+  gmx mdrun -s rerun_A.tpr -rerun prod_A_full.xtc -deffnm rerun_A -ntmpi 1 -ntomp 10
+
+Reading file rerun_A.tpr, VERSION 2026.4-Homebrew (single precision)
+Changing nstlist from 20 to 50, rlist from 1.2 to 1.311
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+Using 1 MPI thread
+Using 10 OpenMP threads 
+
+starting md rerun 'DPPC bilayer with DOX+ and Cl-', reading coordinates from input trajectory 'prod_A_full.xtc'
+
+Reading frame       0 time    0.000   Reading frame       1 time   10.000   Reading frame       2 time   20.000   Reading frame       3 time   30.000   Reading frame       4 time   40.000   Reading frame       5 time   50.000   Reading frame       6 time   60.000   Reading frame       7 time   70.000   Reading frame       8 time   80.000   Reading frame       9 time   90.000   Reading frame      10 time  100.000   Reading frame      11 time  110.000   Reading frame      12 time  120.000   Reading frame      13 time  130.000   Reading frame      14 time  140.000   Reading frame      15 time  150.000   Reading frame      16 time  160.000   Reading frame      17 time  170.000   Reading frame      18 time  180.000   Reading frame      19 time  190.000   Reading frame      20 time  200.000   Reading frame      30 time  300.000   Reading frame      40 time  400.000   Reading frame      50 time  500.000   Reading frame      60 time  600.000   Reading frame      70 time  700.000   Reading frame      80 time  800.000   Reading frame      90 time  900.000   Reading frame     100 time 1000.000   Reading frame     110 time 1100.000   Reading frame     120 time 1200.000   Reading frame     130 time 1300.000   Reading frame     140 time 1400.000   Reading frame     150 time 1500.000   Reading frame     160 time 1600.000   Reading frame     170 time 1700.000   Reading frame     180 time 1800.000   Reading frame     190 time 1900.000   Reading frame     200 time 2000.000   Reading frame     300 time 3000.000   Reading frame     400 time 4000.000   Reading frame     500 time 5000.000   Reading frame     600 time 6000.000   Reading frame     700 time 7000.000   Reading frame     800 time 8000.000   Reading frame     900 time 9000.000   Reading frame    1000 time 10000.000   Reading frame    1100 time 11000.000   Reading frame    1200 time 12000.000   Reading frame    1300 time 13000.000   Reading frame    1400 time 14000.000   Reading frame    1500 time 15000.000   Reading frame    1600 time 16000.000   Reading frame    1700 time 17000.000   Reading frame    1800 time 18000.000   Reading frame    1900 time 19000.000   Reading frame    2000 time 20000.000   Reading frame    3000 time 30000.000   Reading frame    4000 time 40000.000   Reading frame    5000 time 50000.000   Reading frame    6000 time 60000.000   Reading frame    7000 time 70000.000   Reading frame    8000 time 80000.000   Reading frame    9000 time 90000.000   Reading frame   10000 time 100000.000   Reading frame   11000 time 110000.000   Reading frame   12000 time 120000.000   Reading frame   13000 time 130000.000   Reading frame   14000 time 140000.000   Reading frame   15000 time 150000.000   Last frame      15000 time 150000.000   
+
+NOTE: 15 % of the run time was spent in domain decomposition,
+      27 % of the run time was spent in pair search,
+      you might want to increase nstlist (this has no effect on accuracy)
+
+               Core t (s)   Wall t (s)        (%)
+       Time:     4044.459      404.446     1000.0
+                 (ns/day)    (hour/ns)    (ms/step)  (Matom*steps/s) 
+Performance:    32043.834        0.001        0.005         6077.202 
+
+GROMACS reminds you: "Our struggle today is not to have a female Einstein get appointed as an assistant professor. It is for a woman schlemiel to get as quickly promoted as a male schlemiel." (Bella Abzug)
+

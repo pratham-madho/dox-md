@@ -1,0 +1,62 @@
+                 :-) GROMACS - gmx grompp, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_B
+Command line:
+  gmx grompp -f step6.5_equilibration.mdp -o eqB_5.tpr -c eqB_4.gro -r min_B.gro -p topol.top -n index_B.ndx
+
+Generating 1-4 interactions: fudge = 1
+Number of degrees of freedom in T-Coupling group MEMB is 31101.00
+Number of degrees of freedom in T-Coupling group SOLV is 26901.00
+
+GROMACS reminds you: "Unfortunately, "simulation" has become increasingly misused to mean nothing more than "calculation"" (Bill Jorgensen)
+
+Setting the LD random seed to -822087973
+
+Generated 891 of the 903 non-bonded parameter combinations
+
+Generated 664 of the 903 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'CHL1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'DPPC'
+
+turning H bonds into constraints...
+
+Excluding 2 bonded neighbours molecule type 'TIP3'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'LIG'
+
+turning H bonds into constraints...
+
+Excluding 1 bonded neighbours molecule type 'CLA'
+
+turning H bonds into constraints...
+
+Taking velocities from 'eqB_4.gro'
+
+The largest distance between excluded atoms is 0.418 nm between atom 4226 and 4252
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 303.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.276 nm, buffer size 0.076 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+
+  MEMB:       	 2.386  2.620  5.133
+  SOLV:       	 0.000  0.000  0.000
+  MEMB:       	 2.386  2.620  5.133
+  SOLV:       	 0.000  0.000  0.000
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 44x44x84, spacing 0.115 0.115 0.115
+
+Estimate for the relative computational load of the PME mesh part: 0.12
+
+This run will generate roughly 9 Mb of data

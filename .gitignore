@@ -1,0 +1,19 @@
+# Python environment (recreate with: pip install -r requirements.txt)
+venv/
+__pycache__/
+*.pyc
+
+# Large trajectories and videos (archived separately, see README)
+*.xtc
+*.trr
+*.mp4
+
+# GROMACS checkpoints and backup files
+*.cpt
+\#*#
+
+# Third-party paper (linked in README instead)
+2109.00436v2.pdf
+
+# macOS
+.DS_Store

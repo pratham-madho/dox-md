@@ -1,0 +1,52 @@
+                 :-) GROMACS - gmx grompp, 2026.4-Homebrew (-:
+
+Executable:   /opt/homebrew/bin/../Cellar/gromacs/2026.4/bin/gmx
+Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2026.4
+Working dir:  /Users/prathammadhogaria/Desktop/dox_md/system_B
+Command line:
+  gmx grompp -f step6.0_minimization.mdp -o min_B.tpr -c system_B.gro -r system_B.gro -p topol.top
+
+Generating 1-4 interactions: fudge = 1
+Number of degrees of freedom in T-Coupling group rest is 58005.00
+The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+
+Back Off! I just backed up min_B.tpr to ./#min_B.tpr.1#
+
+GROMACS reminds you: "We'll celebrate a woman for anything, as long as it's not her talent." (Colleen McCullough)
+
+Setting the LD random seed to -201351365
+
+Generated 891 of the 903 non-bonded parameter combinations
+
+Generated 664 of the 903 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'CHL1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'DPPC'
+
+turning H bonds into constraints...
+
+Excluding 2 bonded neighbours molecule type 'TIP3'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'LIG'
+
+turning H bonds into constraints...
+
+Excluding 1 bonded neighbours molecule type 'CLA'
+
+turning H bonds into constraints...
+Analysing residue names:
+There are:  4584      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+
+The largest distance between excluded atoms is 0.419 nm between atom 1210 and 1240
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 44x44x84, spacing 0.115 0.115 0.115
+
+Estimate for the relative computational load of the PME mesh part: 0.11
+
+This run will generate roughly 2 Mb of data

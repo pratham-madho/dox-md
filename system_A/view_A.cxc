@@ -1,0 +1,18 @@
+close
+open /Users/prathammadhogaria/Desktop/dox_md/system_A/A_video_ref.pdb
+open /Users/prathammadhogaria/Desktop/dox_md/system_A/A_video.xtc structureModel #1
+set bgColor white
+hide atoms
+show :DPPC & ~H
+style :DPPC stick
+color :DPPC lightgray
+show :DPPC & @P
+style :DPPC & @P sphere
+color :DPPC & @P orange
+show :LIG
+style :LIG sphere
+color :LIG hotpink
+color :LIG & @N blue
+turn x -90
+view
+save /Users/prathammadhogaria/Desktop/test.png

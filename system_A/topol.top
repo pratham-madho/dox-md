@@ -1,0 +1,18 @@
+; System A: DPPC bilayer + DOX+ + Cl-
+#include "toppar/forcefield.itp"
+#include "toppar/LIGff.itp"
+#include "toppar/CLAff.itp"
+#include "toppar/DPPC.itp"
+#include "toppar/TIP3.itp"
+#include "toppar/LIG.itp"
+#include "toppar/CLA.itp"
+
+[ system ]
+DPPC bilayer with DOX+ and Cl-
+
+[ molecules ]
+; Compound   #mols
+DPPC           128
+TIP3          5354
+LIG              1
+CLA              1
