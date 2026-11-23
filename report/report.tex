@@ -1022,6 +1022,13 @@ DPPC/cholesterol bilayer were set up, validated and analysed. The main conclusio
         that limits doxorubicin partitioning into phosphatidylcholine membranes.
 \end{enumerate}
 
+\section*{Data Availability}
+\addcontentsline{toc}{section}{Data Availability}
+The simulation inputs, CHARMM-GUI and GROMACS files, analysis scripts and the source of this report are
+available on GitHub at \url{https://github.com/pratham-madho/dox-md}. The production trajectories,
+reduced trajectories and videos are archived on Zenodo at
+\href{https://doi.org/10.5281/zenodo.24459737}{doi:10.5281/zenodo.24459737}.
+
 \section*{AI Disclosure}
 \addcontentsline{toc}{section}{AI Disclosure}
 AI language models (e.g.\ Claude Code) were used to improve the clarity and layout of this report and to
@@ -1241,6 +1248,8 @@ Chem.MolToMolFile(mol, outfile)
 
 \section{Data and script inventory}
 \label{app:files}
+Files listed below are in the GitHub repository, except those marked \textsuperscript{Z}, which are on
+Zenodo (see Data Availability).
 \begin{table}[!htbp]
 \centering
 \small
@@ -1252,13 +1261,13 @@ DOX\_plus.sdf, protonate.py & \dox{} structure and the script that produced it \
 charmm-gui-9262145299/ & CHARMM-GUI Ligand Reader output (CGenFF topology of \dox) \\
 charmm-gui-9239757263/, -9296217723/ & CHARMM-GUI Membrane Builder inputs and outputs \\
 system\_A/, system\_B/ & GROMACS topologies, \texttt{.mdp} files, equilibration and production runs \\
-prod\_A\_full.xtc, prod\_B\_full.xtc & concatenated \SI{150}{ns} production trajectories (\SI{10}{ps}/frame) \\
+prod\_A\_full.xtc, prod\_B\_full.xtc\textsuperscript{Z} & concatenated \SI{150}{ns} production trajectories (\SI{10}{ps}/frame) \\
 dox\_track*.csv & per-frame drug height, thickness and minimum distances \\
 dens\_*.csv, rdf\_*.csv, scd\_*.csv & density profiles, RDFs, order parameters \\
 energy\_A.xvg, energy\_B.xvg & \dox--membrane interaction energies from \texttt{mdrun -rerun} \\
 track.py, kinetics.py, cross.py, density.py, rdf.py, hbonds.py, orient.py, msd.py, scd.py, membrane.py & analysis scripts (Python / MDAnalysis) \\
 report/make\_figures.py & regenerates all data plots (Figs.~\ref{fig:scd}--\ref{fig:timeline} and \ref{fig:density}--\ref{fig:diffusion}) from the data files \\
-A\_video\_150ns.mp4, B\_video\_150ns.mp4 & ChimeraX movies of the trajectories (source of the snapshots) \\
+A\_video\_150ns.mp4, B\_video\_150ns.mp4\textsuperscript{Z} & ChimeraX movies of the trajectories (source of the snapshots) \\
 \bottomrule
 \end{tabularx}
 \end{table}
